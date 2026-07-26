@@ -1,0 +1,235 @@
+/* ------------------------------------------------------------------
+   Boris Volkov — landing page
+
+   Carries over the identity of the older games archive: coral on dark
+   slate, monospace, the file-folder "bookmark" tab above each section,
+   and the lopsided corner (one big radius, the rest small). Everything
+   else is rebuilt — real elements, grid instead of float tricks, and
+   scroll-margin-top instead of a spacer element for anchor clearance.
+   ------------------------------------------------------------------ */
+
+:root {
+	--coral:      coral;          /* #FF7F50 — the whole identity */
+	--coral-dim:  #c96a45;
+	--bg-top:     rgb(21, 27, 36);
+	--bg-bottom:  rgb(51, 57, 66);
+	--tab:        #345;           /* section tab + panel */
+	--card:       #456;           /* a card at rest */
+	--card-hover: #358;           /* a card under the cursor */
+	--menu:       #445;
+
+	--corner-lg:  40px;           /* the signature top-left sweep */
+	--corner-sm:  12px;
+}
+
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background: linear-gradient(180deg, var(--bg-top), var(--bg-bottom));
+	background-attachment: fixed;
+	color: var(--coral);
+	font-family: "Courier New", Courier, monospace;
+	font-weight: 600;
+	line-height: 1.55;
+	padding-bottom: 6rem;
+}
+
+/* ── header ──────────────────────────────────────────────────────── */
+
+/* The plate on the front of the cabinet. Same panel treatment as a
+   drawer — tab colour, same lopsided corner — so the page opens in the
+   language it goes on to use, instead of floating loose above it. */
+header {
+	width: min(90vw, 1100px);
+	margin: 3.5rem auto 0;
+	padding: 2.5rem 2rem 2.5rem 2.5rem;
+	background: var(--tab);
+	border-radius: var(--corner-sm);
+	border-top-left-radius: var(--corner-lg);
+}
+
+h1 {
+	font-size: clamp(2.4rem, 8vw, 4.75rem);
+	letter-spacing: 0.06em;
+	line-height: 1.05;
+	word-break: break-word;
+}
+
+.tagline {
+	max-width: 52ch;
+	margin-top: 1.25rem;
+	font-size: clamp(0.95rem, 2.2vw, 1.1rem);
+	font-weight: 400;
+	color: var(--coral-dim);
+}
+
+/* The how-to-use line sits in the header as a file would sit in a
+   drawer, which is also the quickest way to say what a row looks like. */
+.legend {
+	max-width: none;   /* spans the panel like a real file row does */
+	margin-top: 1.75rem;
+	padding: 0.85rem 1.5rem;
+	background: var(--card);
+	color: #e8e8ea;
+	border-radius: 8px;
+	border-top-left-radius: 20px;
+	border-top-right-radius: 10px;
+}
+
+.legend b { color: var(--coral); }
+
+/* ── sections ────────────────────────────────────────────────────── */
+
+section {
+	width: min(90vw, 1100px);
+	margin: 0 auto;
+	/* Breathing room when jumping to an #anchor. This is what the old
+	   page's <wedge> spacer element was reaching for; one line does it. */
+	scroll-margin-top: 1.5rem;
+}
+
+.bookmark {
+	width: fit-content;
+	min-width: min(36vw, 320px);
+	/* Indented past the panel's big top-left sweep below it. Flush left,
+	   the tab's square bottom corner overhangs thin air where the panel
+	   has already curved away; starting after the radius puts the tab
+	   down on the flat part of the edge. */
+	margin: 4.5rem 0 0 calc(var(--corner-lg) + 0.75rem);
+	padding: 0.4rem 2rem;
+	text-align: center;
+	background: var(--tab);
+	border-top-left-radius: 30px;
+	border-top-right-radius: 30px;
+}
+
+/* ── the drawer, and the files in it ─────────────────────────────── */
+
+/* The tab above is the drawer label; this is the drawer. Files stack in
+   full-width rows rather than tiling as cards, so the eye runs straight
+   down the labels the way it would down a row of folders. */
+.drawer {
+	list-style: none;
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+	padding: 10px;
+	background: var(--tab);
+	border-radius: var(--corner-sm);
+	border-top-left-radius: var(--corner-lg);
+}
+
+/* One file: label, what's inside, and the two ways to open it. Wraps to
+   stacked lines when the row runs out of width. */
+.file {
+	display: flex;
+	align-items: baseline;
+	flex-wrap: wrap;
+	gap: 0.35rem 1.5rem;
+	padding: 0.9rem 1rem 0.9rem 1.75rem;
+	background: var(--card);
+	border-radius: 8px;
+	border-top-left-radius: 20px;
+	border-top-right-radius: 10px;
+	transition: background 0.12s ease;
+}
+
+/* A whole-row tint on hover — not an invitation to click the row (the
+   buttons are the only targets) but a reading aid, so the eye keeps its
+   place across a long drawer. Deliberately weaker than a button's. */
+.file:hover       { background: #4b5b70; }
+.file:focus-within { background: var(--card-hover); }
+
+.name {
+	flex: 0 0 auto;
+	min-width: 13rem;
+	font-size: 1.05rem;
+	font-weight: 600;
+	word-break: break-word;
+}
+
+.desc {
+	flex: 1 1 20rem;
+	font-weight: 400;
+	font-size: 0.9rem;
+	line-height: 1.45;
+	color: #e8e8ea;
+}
+
+.meta {
+	margin-left: 0.5rem;
+	font-size: 0.78rem;
+	color: var(--coral-dim);
+	white-space: nowrap;
+}
+
+/* Pinned to the right edge of the row on wide screens; falls in below
+   once the row wraps. */
+.links { margin-left: auto; }
+
+@media (max-width: 640px) {
+	.name  { min-width: 100%; }
+	.links { margin-left: 0; }
+	.file  { padding-left: 1.25rem; }
+}
+
+/* ── the two doors on every card: open/download, and code ─────────── */
+
+.links {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+	margin-top: 0.4rem;
+}
+
+.links a {
+	padding: 0.45rem 1.25rem;
+	background: var(--tab);
+	color: var(--coral);
+	text-decoration: none;
+	font-size: 0.9rem;
+	border-radius: 10px;
+	border-top-left-radius: 18px;
+	transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.links a:hover,
+.links a:focus-visible {
+	background: var(--card-hover);
+	transform: translateY(-1px);
+}
+
+/* The reading link is the quieter of the two — outlined rather than
+   filled, so "open" stays the obvious first move. */
+.links a:last-child:not(:only-child) {
+	background: transparent;
+	box-shadow: inset 0 0 0 1px var(--coral-dim);
+}
+
+.links a:last-child:not(:only-child):hover,
+.links a:last-child:not(:only-child):focus-visible {
+	background: var(--card-hover);
+	box-shadow: inset 0 0 0 1px var(--coral);
+}
+
+/* ── footer ──────────────────────────────────────────────────────── */
+
+footer {
+	width: min(90vw, 1100px);
+	margin: 5rem auto 0;
+	font-size: 0.85rem;
+	font-weight: 400;
+	color: var(--coral-dim);
+}
+
+footer a { color: var(--coral); }
+
+/* Visible keyboard focus everywhere — the old page had none. */
+a:focus-visible {
+	outline: 2px solid var(--coral);
+	outline-offset: 2px;
+}

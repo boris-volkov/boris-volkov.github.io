@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Boris Volkov</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="author" content="Boris Volkov">
+<meta name="description" content="Programs for practicing math, music, chess and go. Every project can be run and its source read.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+	<h1>boris_volkov</h1>
+	<p class="tagline">
+		Programs for practicing things worth practicing &mdash;
+		math, music, chess, and the game of go.
+		Mostly C, C++ and JavaScript.
+	</p>
+	<p class="tagline legend">
+		Every file opens two ways: <b>open</b> runs it,
+		<b>code</b> shows the source.
+	</p>
+</header>
+
+<!-- ── drawer one: runs in a browser ───────────────────────────────── -->
+<section id="play">
+	<div class="bookmark">play_in_browser</div>
+	<ul class="drawer">
+
+		<li class="file">
+			<h2 class="name">math_arcade</h2>
+			<p class="desc">Arcade-style drills for arithmetic fluency.
+				Its own domain, its own cabinet.
+				<span class="meta">javascript</span></p>
+			<span class="links">
+				<a href="https://matharcade.io/">open</a>
+				<a href="https://github.com/boris-volkov/MathArcade">code</a>
+			</span>
+		</li>
+
+		<li class="file">
+			<h2 class="name">mandelbrot_set</h2>
+			<p class="desc">Click anywhere on the fractal to zoom, and keep
+				zooming &mdash; spirals, trees and galaxies all the way down,
+				out of one tame quadratic equation.
+				<span class="meta">javascript</span></p>
+			<span class="links">
+				<a href="/games/exe/mandelbrot/main.html">open</a>
+				<a href="/games/exe/mandelbrot/formatted.html">code</a>
+			</span>
+		</li>
+
+		<li class="file">
+			<h2 class="name">2d_engine</h2>
+			<p class="desc">A little robot that jets around, jumps several
+				times over and throws a ball. Platformer engine written
+				straight onto a canvas, no library.
+				<span class="meta">javascript</span></p>
+			<span class="links">
+				<a href="/games/exe/game/main.html">open</a>
+				<a href="/games/exe/game/formatted.html">code</a>
+			</span>
+		</li>
+
+		<li class="file">
+			<h2 class="name">sixteen_puzzle</h2>
+			<p class="desc">The sliding puzzle with no empty square. It slides
+				because the edges wrap &mdash; and to scramble at all, they
+				wrap with a flip, like a M&ouml;bius strip.
+				<span class="meta">javascript</span></p>
+			<span class="links">
+				<a href="/games/exe/sixteen/main.html">open</a>
+				<a href="/games/exe/sixteen/formatted.html">code</a>
+			</span>
+		</li>
+
+		<li class="file">
+			<h2 class="name">fifteen_puzzle</h2>
+			<p class="desc">The classic fifteen-piece slide. Arrows or WASD;
+				backtick throws a hundred random moves at it so you have
+				something to undo.
+				<span class="meta">javascript</span></p>
+			<span class="links">
+				<a href="/games/exe/fifteen/main.html">open</a>
+				<a href="/games/exe/fifteen/formatted.html">code</a>
+			</span>
+		</li>
+
+		<li class="file">
+			<h2 class="name">the_princess_test</h2>
+			<p class="desc">A logic puzzle found in a book and built into a
+				program: learn the rules of a number game, then try to pass
+				the six tests. Expect it to take hours.
+				<span class="meta">javascript</span></p>
+			<span class="links">
+				<a href="/games/exe/princess/main.html">open</a>
+				<a href="/games/exe/princess/formatted.html">code</a>
+			</span>
+		</li>
+
+		<li class="file">
+			<h2 class="name">sets_playground</h2>
+			<p class="desc">A visual explorer for set operations &mdash; unions,
+				intersections and complements you can see.
+				<span class="meta">javascript</span></p>
+			<span class="links">
+				<a href="/sets/">open</a>
+				<a href="https://github.com/boris-volkov/sets">code</a>
+			</span>
+		</li>
+
+		<li class="file">
+			<h2 class="name">music_theory</h2>
+			<p class="desc">Ear and theory training that listens to a MIDI
+				keyboard plugged into the browser.
+				<span class="meta">javascript &middot; web_midi</span></p>
+			<span class="links">
+				<a href="/music/">open</a>
+				<a href="https://github.com/boris-volkov/music">code</a>
+			</span>
+		</li>
+
+		<li class="file">
+			<h2 class="name">piano_visualizer</h2>
+			<p class="desc">Watch what your hands are doing: live visualisation
+				of a MIDI keyboard as you play it.
+				<span class="meta">javascript &middot; web_midi</span></p>
+			<span class="links">
+				<a href="/piano-visualizer/">open</a>
+				<a href="https://github.com/boris-volkov/piano-visualizer">code</a>
+			</span>
+		</li>
+
+		<li class="file">
+			<h2 class="name">trig_unit_circle</h2>
+			<p class="desc">Unit-circle and trigonometry quizzes, drilled until
+				the angles are memorised.
+				<span class="meta">html &middot; javascript</span></p>
+			<span class="links">
+				<a href="/math/">open</a>
+				<a href="https://github.com/boris-volkov/math">code</a>
+			</span>
+		</li>
+
+		<li class="file">
+			<h2 class="name">3d_wireframes</h2>
+			<p class="desc">Rotating wireframe solids, projected and drawn from
+				scratch &mdash; no 3D library.
+				<span class="meta">c</span></p>
+			<span class="links">
+				<a href="/spinning-cube/">open</a>
+				<a href="https://github.com/boris-volkov/spinning-cube">code</a>
+			</span>
+		</li>
+
+		<li class="file">
+			<h2 class="name">chess_board</h2>
+			<p class="desc">A playable board in the browser, with legal move
+				generation written from first principles.
+				<span class="meta">javascript</span></p>
+			<span class="links">
+				<a href="/chess/">open</a>
+				<a href="https://github.com/boris-volkov/chess">code</a>
+			</span>
+		</li>
+
+	</ul>
+</section>
+
+<!-- ── drawer two: native programs ─────────────────────────────────── -->
+<section id="run">
+	<div class="bookmark">run_on_your_machine</div>
+	<ul class="drawer">
+
+		<li class="file">
+			<h2 class="name">go_station</h2>
+			<p class="desc">Play go on OGS from the desktop with a game
+				controller: correspondence games, challenges, KataGo analysis,
+				and ~13,700 professional games to study.
+				<span class="meta">c++ &middot; sdl2 &middot; windows</span></p>
+			<span class="links">
+				<a href="https://github.com/boris-volkov/go_station/releases/latest">download</a>
+				<a href="https://github.com/boris-volkov/go_station">code</a>
+			</span>
+		</li>
+
+		<li class="file">
+			<h2 class="name">handheld</h2>
+			<p class="desc">A purpose-built handheld computer for math practice
+				&mdash; the hardware and the software that runs on it.
+				<span class="meta">c++ &middot; embedded</span></p>
+			<span class="links">
+				<a href="https://github.com/boris-volkov/handheld">code</a>
+			</span>
+		</li>
+
+		<li class="file">
+			<h2 class="name">chess_trainer</h2>
+			<p class="desc">A training program built on the Leela engine: play
+				positions against a tuned opponent instead of a wall.
+				<span class="meta">c &middot; leela</span></p>
+			<span class="links">
+				<a href="https://github.com/boris-volkov/chess_trainer">code</a>
+			</span>
+		</li>
+
+		<li class="file">
+			<h2 class="name">c_graphics</h2>
+			<p class="desc">A headless graphics library: rasterising and writing
+				out images with no windowing system involved.
+				<span class="meta">c</span></p>
+			<span class="links">
+				<a href="https://github.com/boris-volkov/Cgraphics">code</a>
+			</span>
+		</li>
+
+	</ul>
+</section>
+
+<!-- ── drawer three: python, read here or run in a terminal ────────── -->
+<section id="read">
+	<div class="bookmark">python_programs</div>
+	<ul class="drawer">
+
+		<li class="file">
+			<h2 class="name">chaos_graph</h2>
+			<p class="desc">Plots the bifurcation diagram &mdash; orderly in
+				places, indistinguishable from random in others, from one
+				simple iterated rule.
+				<span class="meta">python &middot; matplotlib</span></p>
+			<span class="links">
+				<a href="/games/code/chaos/formatted.html">code</a>
+			</span>
+		</li>
+
+		<li class="file">
+			<h2 class="name">stock_trader</h2>
+			<p class="desc">A deliberately silly trading sim: one company, ten
+				thousand dollars, rent due monthly, coin-flip prices. At year's
+				end it tells you what the perfect run would have earned.
+				<span class="meta">python &middot; terminal</span></p>
+			<span class="links">
+				<a href="/games/code/stocks/formatted.html">code</a>
+			</span>
+		</li>
+
+		<li class="file">
+			<h2 class="name">connect_four</h2>
+			<p class="desc">Connect four in the terminal, drawn with coloured
+				unicode blocks. Full-screen the terminal and raise the font
+				size and it starts to look like a real board.
+				<span class="meta">python &middot; terminal</span></p>
+			<span class="links">
+				<a href="/games/code/connect_four/formatted.html">code</a>
+			</span>
+		</li>
+
+	</ul>
+</section>
+
+<footer>
+	<p>no frameworks &middot; no build step &middot;
+	   <a href="https://github.com/boris-volkov">github.com/boris-volkov</a></p>
+</footer>
+
+</body>
+</html>
