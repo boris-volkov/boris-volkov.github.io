@@ -171,21 +171,29 @@ function rowEl(row) {
 	const div = document.createElement('div');
 	div.className = 'row ' + row.kind;
 	for (const s of row.segs) {
-		const span = document.createElement('span');
-		span.className = 'seg-' + s.role;
-		span.textContent = s.t;
-		if (s.click) {
-			span.classList.add('clk');
-			span.setAttribute('role', 'link');
-			span.addEventListener('click', ev => {
+		/* Anything that leaves the page is a real anchor, not a span with
+		   a handler: middle-click, ctrl-click, "copy link address" and the
+		   browser's own hover preview all come free, and they are exactly
+		   what a rail of links should support. */
+		const isLink = s.click && s.click.kind === 'url';
+		const el = document.createElement(isLink ? 'a' : 'span');
+		el.className = 'seg-' + s.role;
+		el.textContent = s.t;
+		if (isLink) {
+			el.href = s.click.href;
+			if (NEW_TAB) { el.target = '_blank'; el.rel = 'noopener noreferrer'; }
+			el.classList.add('clk');
+			el.addEventListener('click', ev => ev.stopPropagation());
+		} else if (s.click) {
+			el.classList.add('clk');
+			el.setAttribute('role', 'link');
+			el.addEventListener('click', ev => {
 				ev.stopPropagation();
-				const c = s.click;
-				if (c.kind === 'read') openReader(c.path);
-				else if (c.kind === 'url') go(c.href);
-				else exec(c.cmd);
+				if (s.click.kind === 'read') openReader(s.click.path);
+				else exec(s.click.cmd);
 			});
 		}
-		div.appendChild(span);
+		div.appendChild(el);
 	}
 	return div;
 }
@@ -197,21 +205,55 @@ function push(rows) {
 	tbody.scrollTop = tbody.scrollHeight;
 }
 
-/* Descriptions share one column across a whole listing. The connectors
-   are part of the width, so a tree and a flat `ls` both line up. */
+const btn = t => '[' + t + ']';
+
+/* A listing is three columns of monospace text: the name (tree
+   connectors included, so a tree and a flat `ls` line up the same), the
+   description, and a rail of buttons on the right.
+
+   Every column is measured across the whole block before anything is
+   emitted, which is the only way padding made of literal spaces can
+   come out straight. */
 function alignRows(items) {
-	let col = 0;
+	let descCol = 0, actCol = 0, runW = 0;
 	for (const it of items) {
-		if (it.desc) col = Math.max(col, it.prefix.length + it.label.length);
+		if (it.desc) descCol = Math.max(descCol, it.prefix.length + it.label.length);
+		if (it.run) runW = Math.max(runW, btn(it.runLabel).length);
 	}
-	col += 3;
+	descCol += 3;
+	for (const it of items) {
+		if (it.desc) actCol = Math.max(actCol, descCol + it.desc.length);
+		else if (it.run || it.code) actCol = Math.max(actCol, it.prefix.length + it.label.length);
+	}
+	actCol += 2;
+
 	return items.map(it => {
 		const segs = [];
 		if (it.prefix) segs.push(S(it.prefix, 'dim'));
 		segs.push(S(it.label, it.role, it.click));
+		let col = it.prefix.length + it.label.length;
+
 		if (it.desc) {
-			segs.push(S(spaces(col - it.prefix.length - it.label.length), 'pad'));
+			segs.push(S(spaces(descCol - col), 'pad'));
 			segs.push(S(it.desc, 'desc'));
+			col = descCol + it.desc.length;
+		}
+
+		/* The buttons. A file with no `run` still reserves the slot, so
+		   [source] stays in one straight column down the listing. */
+		if (it.run || it.code) {
+			segs.push(S(spaces(actCol - col), 'gap'));
+			if (it.run) {
+				const t = btn(it.runLabel);
+				segs.push(S(t, 'run', { kind: 'url', href: it.run }));
+				if (runW > t.length) segs.push(S(spaces(runW - t.length), 'runpad'));
+			} else if (runW) {
+				segs.push(S(spaces(runW), 'runpad'));
+			}
+			if (it.code) {
+				segs.push(S('  ', 'btngap'));
+				segs.push(S(btn('source'), 'src', { kind: 'url', href: it.code }));
+			}
 		}
 		return line(segs);
 	});
@@ -220,7 +262,11 @@ function alignRows(items) {
 /* One entry in a listing. Clicking a directory runs `cd` — it changes
    shell state, so it echoes like a typed command. Clicking a file opens
    the reader silently: a mouse user should never see a phantom `cat`
-   line they did not type. */
+   line they did not type.
+
+   The buttons carry the destinations, so getting to a program is one
+   click from the listing; the name is still there for the longer write
+   up behind it. */
 function entryItem(prefix, name, child, segs) {
 	const path = segs.concat(name).join('/');
 	if (child.type === 'dir') {
@@ -234,7 +280,10 @@ function entryItem(prefix, name, child, segs) {
 		label: name + (child.exec ? '*' : ''),
 		role: child.exec ? 'exec' : 'file',
 		desc: child.info.summary,
-		click: { kind: 'read', path: '~/' + path }
+		click: { kind: 'read', path: '~/' + path },
+		run: child.info.run,
+		runLabel: child.info.runLabel,
+		code: child.info.code
 	};
 }
 
@@ -276,7 +325,7 @@ function helpRows() {
 		cmd('cd <dir>', 'enter a folder   (cd .. up · cd ~ home)'),
 		cmd('cat <file>', 'what a program is   (aliases: open, read, man)'),
 		cmd('./<file>', 'run it   (aliases: run <file>)'),
-		cmd('code <file>', 'open its source'),
+		cmd('code <file>', 'open its source on GitHub'),
 		cmd('pwd', 'print the current path'),
 		cmd('whoami', 'who wrote all this'),
 		cmd('about', 'about this page'),
@@ -698,8 +747,9 @@ function hint() {
 		blank(),
 		wrap([
 			S('type ', 'dim'), S('help', 'accent'),
-			S(' for commands · click any file · ', 'dim'), S('*', 'exec'),
-			S(' runs here · ', 'dim'),
+			S(' for commands · ', 'dim'), S('[run]', 'run'),
+			S(' and ', 'dim'), S('[source]', 'src'),
+			S(' go straight there · click a name to read more · ', 'dim'),
 			S('github.com/boris-volkov', 'accent', { kind: 'url', href: GITHUB })
 		]),
 		blank()
