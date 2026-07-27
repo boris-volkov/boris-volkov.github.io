@@ -101,3 +101,41 @@ Three things the repo needs:
   thing anyone reads about the program.
 
 Then add the `<li>` here, pointing `data-run` at `/thing/`.
+
+---
+
+## Checking it still hangs together
+
+```bash
+python check.py            # structure only — instant, offline
+python check.py --links    # also fetch every URL
+```
+
+`check.py` **generates nothing.** `index.html` stays hand-written and stays
+the source of truth; the script only reports where it and the world have
+drifted apart. Deleting it would cost the site nothing.
+
+It catches the three things that go quietly wrong:
+
+- a project on the site whose repo isn't cloned into the matching
+  category folder, or is filed under a different one
+- a repo sitting in `browser/`, `native/` or `python/` that never made it
+  onto the site
+- with `--links`, a `[run]` or `[source]` that has started 404ing —
+  the one failure nothing else will ever tell you about
+
+Repo names and site names deliberately differ (`3d_wireframes` lives in
+the repo `spinning-cube`), so the script reads the repo out of
+`data-code` rather than guessing from the name.
+
+**If you want it enforced rather than remembered**, wire the fast check
+into a pre-commit hook:
+
+```bash
+printf '#!/bin/sh\nexec python check.py\n' > .git/hooks/pre-commit
+chmod +x .git/hooks/pre-commit
+```
+
+Then a commit that leaves the site and the folders disagreeing will fail.
+Keep `--links` out of the hook — it needs the network and takes half a
+minute, which is not something to put in front of every commit.
