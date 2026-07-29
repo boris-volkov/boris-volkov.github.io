@@ -61,22 +61,31 @@ function fileNode(el, name) {
 	};
 }
 
+/* A directory. Its `<ul>` holds one `<li>` per entry, and an `<li>` that
+   carries data-dir is itself a directory — so this nests to any depth,
+   which is what lets the page mirror the folder it was written from.
+   Only *direct* children are read; a deep query would pull a nested
+   directory's files up into its parent. */
+function dirFrom(el) {
+	const children = {};
+	const list = el.querySelector(':scope > ul');
+	if (list) {
+		for (const li of list.children) {
+			if (li.dataset.dir) children[li.dataset.dir] = dirFrom(li);
+			else if (li.dataset.name) children[li.dataset.name] = fileNode(li, li.dataset.name);
+		}
+	}
+	return { type: 'dir', desc: el.dataset.desc || '', children: children };
+}
+
 function buildFS(root) {
 	const tree = {};
-	root.querySelectorAll('[data-dir]').forEach(sec => {
-		const children = {};
-		sec.querySelectorAll('[data-name]').forEach(el => {
-			children[el.dataset.name] = fileNode(el, el.dataset.name);
-		});
-		tree[sec.dataset.dir] = {
-			type: 'dir',
-			desc: sec.dataset.desc || '',
-			children: children
-		};
-	});
-	root.querySelectorAll('[data-file]').forEach(el => {
+	for (const sec of root.querySelectorAll(':scope > section[data-dir]')) {
+		tree[sec.dataset.dir] = dirFrom(sec);
+	}
+	for (const el of root.querySelectorAll(':scope > section[data-file]')) {
 		tree[el.dataset.file] = fileNode(el, el.dataset.file);
-	});
+	}
 	return tree;
 }
 

@@ -30,9 +30,11 @@
 <!-- ═══════════════════════════════════════════════════════════════════
      The content.
 
-     This is the whole site: three folders of programs, and an about
-     file. terminal.js reads these nodes into a virtual filesystem and
-     then hides this list. With JavaScript off it stays visible and the
+     This mirrors Documents\GitHub on my machine: one <section> per
+     category folder, one <li> per project. An <li> carrying data-dir
+     is itself a directory and may hold its own <ul>, so the nesting
+     goes as deep as the folder does. terminal.js reads these nodes
+     into a virtual filesystem and then hides this list. With JavaScript off it stays visible and the
      page still works — so this markup, not the script, is the source of
      truth. To add a project, add an <li> here and nothing else.
 
@@ -50,55 +52,50 @@
 <p>Programs for practicing things worth practicing &mdash; math, music,
    chess, and the game of go. Mostly C, C++ and JavaScript.</p>
 
-<!-- Alphabetical order is what `ls` gives you, so the directory names
-     are chosen to sort the way the page should read: browser first —
-     twelve things you can start with one click — then native, then
-     python. -->
-<section data-dir="browser" data-desc="click and play, right now">
-	<h2>browser</h2>
+<!-- The categories are the folders in Documents\GitHub, in the order `ls`
+     puts them. Underscore-prefixed folders there (_archive, _external,
+     _reference) are the ones deliberately not on the site. -->
+<section data-dir="art" data-desc="drawn by arithmetic">
+	<h2>art</h2>
 	<ul>
 
-		<li data-name="math_arcade"
-		    data-summary="arithmetic drills, arcade-style"
-		    data-tech="javascript"
-		    data-run="https://matharcade.io/"
-		    data-code="https://github.com/boris-volkov/MathArcade">
-			<h3>math_arcade</h3>
-			<p>Arcade-style drills for arithmetic fluency. Its own domain,
-			   its own cabinet.</p>
+		<li data-name="3d_wireframes"
+		    data-summary="rotating solids, drawn from scratch"
+		    data-tech="c"
+		    data-run="/spinning-cube/"
+		    data-code="https://github.com/boris-volkov/spinning-cube">
+			<h3>3d_wireframes</h3>
+			<p>Rotating wireframe solids, projected and drawn from scratch &mdash; no 3D library.</p>
 		</li>
 
-		<li data-name="mandelbrot_set"
-		    data-summary="click anywhere and keep zooming"
-		    data-tech="javascript"
-		    data-run="/mandelbrot_set/"
-		    data-code="https://github.com/boris-volkov/mandelbrot_set">
-			<h3>mandelbrot_set</h3>
-			<p>Click anywhere on the fractal to zoom, and keep zooming &mdash;
-			   spirals, trees and galaxies all the way down, out of one tame
-			   quadratic equation.</p>
+	</ul>
+</section>
+
+<!-- Empty on purpose: the category exists before the writing does. -->
+<section data-dir="essays" data-desc="nothing here yet">
+	<h2>essays</h2>
+	<ul>
+	</ul>
+</section>
+
+<section data-dir="games" data-desc="things to play">
+	<h2>games</h2>
+	<ul>
+
+		<li data-name="chess_trainer"
+		    data-summary="positions to play against Leela"
+		    data-tech="c &middot; leela"
+		    data-code="https://github.com/boris-volkov/chess_trainer">
+			<h3>chess_trainer</h3>
+			<p>A training program built on the Leela engine: play positions against a tuned opponent instead of a wall.</p>
 		</li>
 
-		<li data-name="2d_engine"
-		    data-summary="jetpack platformer, no library"
-		    data-tech="javascript"
-		    data-run="/2d_engine/"
-		    data-code="https://github.com/boris-volkov/2d_engine">
-			<h3>2d_engine</h3>
-			<p>A little robot that jets around, jumps several times over and
-			   throws a ball. Platformer engine written straight onto a
-			   canvas, no library.</p>
-		</li>
-
-		<li data-name="sixteen_puzzle"
-		    data-summary="a sliding puzzle with no gap"
-		    data-tech="javascript"
-		    data-run="/sixteen_puzzle/"
-		    data-code="https://github.com/boris-volkov/sixteen_puzzle">
-			<h3>sixteen_puzzle</h3>
-			<p>The sliding puzzle with no empty square. It slides because the
-			   edges wrap &mdash; and to scramble at all, they wrap with a
-			   flip, like a M&ouml;bius strip.</p>
+		<li data-name="chess_viewer"
+		    data-summary="plays through PGNs, no commentary"
+		    data-tech="c &middot; sdl2"
+		    data-code="https://github.com/boris-volkov/chess_viewer">
+			<h3>chess_viewer</h3>
+			<p>A minimal PGN viewer that plays through games on its own. After Willy Hendriks in <em>Move First, Think Later</em>: looking for good moves may not have to be guided by language, so this shows you chess without any.</p>
 		</li>
 
 		<li data-name="fifteen_puzzle"
@@ -107,101 +104,8 @@
 		    data-run="/fifteen_puzzle/"
 		    data-code="https://github.com/boris-volkov/fifteen_puzzle">
 			<h3>fifteen_puzzle</h3>
-			<p>The classic fifteen-piece slide. Arrows or WASD; backtick
-			   throws a hundred random moves at it so you have something
-			   to undo.</p>
+			<p>The classic fifteen-piece slide. Arrows or WASD; backtick throws a hundred random moves at it so you have something to undo.</p>
 		</li>
-
-		<li data-name="the_princess_test"
-		    data-summary="a logic puzzle in six tests"
-		    data-tech="javascript"
-		    data-run="/the_princess_test/"
-		    data-code="https://github.com/boris-volkov/the_princess_test">
-			<h3>the_princess_test</h3>
-			<p>A logic puzzle found in a book and built into a program: learn
-			   the rules of a number game, then try to pass the six tests.
-			   Expect it to take hours.</p>
-		</li>
-
-
-		<li data-name="game_of_life"
-		    data-summary="Conway's cellular automaton"
-		    data-tech="javascript"
-		    data-run="/game_of_life/"
-		    data-code="https://github.com/boris-volkov/game_of_life">
-			<h3>game_of_life</h3>
-			<p>Conway's Game of Life, the most famous of the cellular
-			   automata. Every cell lives or dies by how crowded its
-			   neighbourhood is, and out of those few rules come gliders,
-			   blinkers and patterns that never settle.</p>
-		</li>
-
-		<li data-name="sets_playground"
-		    data-summary="set operations you can see"
-		    data-tech="javascript"
-		    data-run="/sets/"
-		    data-code="https://github.com/boris-volkov/sets">
-			<h3>sets_playground</h3>
-			<p>A visual explorer for set operations &mdash; unions,
-			   intersections and complements you can see.</p>
-		</li>
-
-		<li data-name="music_theory"
-		    data-summary="ear training over a MIDI keyboard"
-		    data-tech="javascript &middot; web_midi"
-		    data-run="/music/"
-		    data-code="https://github.com/boris-volkov/music">
-			<h3>music_theory</h3>
-			<p>Ear and theory training that listens to a MIDI keyboard
-			   plugged into the browser.</p>
-		</li>
-
-		<li data-name="piano_visualizer"
-		    data-summary="watch what your hands are doing"
-		    data-tech="javascript &middot; web_midi"
-		    data-run="/piano-visualizer/"
-		    data-code="https://github.com/boris-volkov/piano-visualizer">
-			<h3>piano_visualizer</h3>
-			<p>Watch what your hands are doing: live visualisation of a MIDI
-			   keyboard as you play it.</p>
-		</li>
-
-		<li data-name="trig_unit_circle"
-		    data-summary="the unit circle, drilled"
-		    data-tech="html &middot; javascript"
-		    data-run="/math/"
-		    data-code="https://github.com/boris-volkov/math">
-			<h3>trig_unit_circle</h3>
-			<p>Unit-circle and trigonometry quizzes, drilled until the angles
-			   are memorised.</p>
-		</li>
-
-		<li data-name="3d_wireframes"
-		    data-summary="rotating solids, drawn from scratch"
-		    data-tech="c"
-		    data-run="/spinning-cube/"
-		    data-code="https://github.com/boris-volkov/spinning-cube">
-			<h3>3d_wireframes</h3>
-			<p>Rotating wireframe solids, projected and drawn from scratch
-			   &mdash; no 3D library.</p>
-		</li>
-
-		<li data-name="chess_board"
-		    data-summary="legal moves from first principles"
-		    data-tech="javascript"
-		    data-run="/chess/"
-		    data-code="https://github.com/boris-volkov/chess">
-			<h3>chess_board</h3>
-			<p>A playable board in the browser, with legal move generation
-			   written from first principles.</p>
-		</li>
-
-	</ul>
-</section>
-
-<section data-dir="native" data-desc="download, or build from source">
-	<h2>native</h2>
-	<ul>
 
 		<li data-name="go_station"
 		    data-summary="play go on OGS with a controller"
@@ -210,27 +114,150 @@
 		    data-run-label="download"
 		    data-code="https://github.com/boris-volkov/go_station">
 			<h3>go_station</h3>
-			<p>Play go on OGS from the desktop with a game controller:
-			   correspondence games, challenges, KataGo analysis, and ~13,700
-			   professional games to study.</p>
+			<p>Play go on OGS from the desktop with a game controller: correspondence games, challenges, KataGo analysis, and ~13,700 professional games to study.</p>
 		</li>
 
-		<li data-name="handheld"
-		    data-summary="a computer built for math practice"
-		    data-tech="c++ &middot; embedded"
-		    data-code="https://github.com/boris-volkov/handheld">
-			<h3>handheld</h3>
-			<p>A purpose-built handheld computer for math practice &mdash;
-			   the hardware and the software that runs on it.</p>
+		<li data-name="sixteen_puzzle"
+		    data-summary="a sliding puzzle with no gap"
+		    data-tech="javascript"
+		    data-run="/sixteen_puzzle/"
+		    data-code="https://github.com/boris-volkov/sixteen_puzzle">
+			<h3>sixteen_puzzle</h3>
+			<p>The sliding puzzle with no empty square. It slides because the edges wrap &mdash; and to scramble at all, they wrap with a flip, like a M&ouml;bius strip.</p>
 		</li>
 
-		<li data-name="chess_trainer"
-		    data-summary="positions to play against Leela"
-		    data-tech="c &middot; leela"
-		    data-code="https://github.com/boris-volkov/chess_trainer">
-			<h3>chess_trainer</h3>
-			<p>A training program built on the Leela engine: play positions
-			   against a tuned opponent instead of a wall.</p>
+	</ul>
+</section>
+
+<section data-dir="math" data-desc="the reason for the rest of it">
+	<h2>math</h2>
+	<ul>
+
+		<li data-name="game_of_life"
+		    data-summary="Conway's cellular automaton"
+		    data-tech="javascript"
+		    data-run="/game_of_life/"
+		    data-code="https://github.com/boris-volkov/game_of_life">
+			<h3>game_of_life</h3>
+			<p>Conway's Game of Life, the most famous of the cellular automata. Every cell lives or dies by how crowded its neighbourhood is, and out of those few rules come gliders, blinkers and patterns that never settle.</p>
+		</li>
+
+		<li data-name="mandelbrot_set"
+		    data-summary="click anywhere and keep zooming"
+		    data-tech="javascript"
+		    data-run="/mandelbrot_set/"
+		    data-code="https://github.com/boris-volkov/mandelbrot_set">
+			<h3>mandelbrot_set</h3>
+			<p>Click anywhere on the fractal to zoom, and keep zooming &mdash; spirals, trees and galaxies all the way down, out of one tame quadratic equation.</p>
+		</li>
+
+		<li data-name="math_arcade"
+		    data-summary="arithmetic drills, arcade-style"
+		    data-tech="javascript"
+		    data-run="https://matharcade.io/"
+		    data-code="https://github.com/boris-volkov/MathArcade">
+			<h3>math_arcade</h3>
+			<p>Arcade-style drills for arithmetic fluency. Its own domain, its own cabinet.</p>
+		</li>
+
+		<li data-name="sets_playground"
+		    data-summary="set operations you can see"
+		    data-tech="javascript"
+		    data-run="/sets/"
+		    data-code="https://github.com/boris-volkov/sets">
+			<h3>sets_playground</h3>
+			<p>A visual explorer for set operations &mdash; unions, intersections and complements you can see.</p>
+		</li>
+
+		<li data-name="the_princess_test"
+		    data-summary="a logic puzzle in six tests"
+		    data-tech="javascript"
+		    data-run="/the_princess_test/"
+		    data-code="https://github.com/boris-volkov/the_princess_test">
+			<h3>the_princess_test</h3>
+			<p>A logic puzzle found in a book and built into a program: learn the rules of a number game, then try to pass the six tests. Expect it to take hours.</p>
+		</li>
+
+	</ul>
+</section>
+
+<section data-dir="music" data-desc="for a MIDI keyboard">
+	<h2>music</h2>
+	<ul>
+
+		<li data-name="music_theory"
+		    data-summary="ear training over a MIDI keyboard"
+		    data-tech="javascript &middot; web_midi"
+		    data-run="/music/"
+		    data-code="https://github.com/boris-volkov/music">
+			<h3>music_theory</h3>
+			<p>Ear and theory training that listens to a MIDI keyboard plugged into the browser.</p>
+		</li>
+
+		<li data-name="piano_visualizer"
+		    data-summary="watch what your hands are doing"
+		    data-tech="javascript &middot; web_midi"
+		    data-run="/piano-visualizer/"
+		    data-code="https://github.com/boris-volkov/piano-visualizer">
+			<h3>piano_visualizer</h3>
+			<p>Watch what your hands are doing: live visualisation of a MIDI keyboard as you play it.</p>
+		</li>
+
+	</ul>
+</section>
+
+<section data-dir="programming" data-desc="how the machine works">
+	<h2>programming</h2>
+	<ul>
+
+		<!-- A directory inside a directory; cd into it like any other. -->
+		<li data-dir="examples" data-desc="small programs to read">
+			<h3>examples</h3>
+			<ul>
+
+				<li data-name="chaos_graph"
+				    data-summary="the bifurcation diagram, plotted"
+				    data-tech="python &middot; matplotlib"
+				    data-code="https://github.com/boris-volkov/chaos_graph">
+					<h3>chaos_graph</h3>
+					<p>Plots the bifurcation diagram &mdash; orderly in places, indistinguishable from random in others, from one simple iterated rule.</p>
+				</li>
+
+				<li data-name="connect_four"
+				    data-summary="connect four in unicode blocks"
+				    data-tech="python &middot; terminal"
+				    data-code="https://github.com/boris-volkov/connect_four">
+					<h3>connect_four</h3>
+					<p>Connect four in the terminal, drawn with coloured unicode blocks. Full-screen the terminal and raise the font size and it starts to look like a real board.</p>
+				</li>
+
+				<li data-name="stock_trader"
+				    data-summary="a deliberately silly trading sim"
+				    data-tech="python &middot; terminal"
+				    data-code="https://github.com/boris-volkov/stock_trader">
+					<h3>stock_trader</h3>
+					<p>One company, ten thousand dollars, rent due monthly, coin-flip prices. At year's end it tells you what the perfect run would have earned.</p>
+				</li>
+
+			</ul>
+		</li>
+
+		<li data-name="2d_engine"
+		    data-summary="jetpack platformer, no library"
+		    data-tech="javascript"
+		    data-run="/2d_engine/"
+		    data-code="https://github.com/boris-volkov/2d_engine">
+			<h3>2d_engine</h3>
+			<p>A little robot that jets around, jumps several times over and throws a ball. Platformer engine written straight onto a canvas, no library.</p>
+		</li>
+
+		<li data-name="LMC"
+		    data-summary="a CPU you can step through"
+		    data-tech="javascript &middot; react"
+		    data-run="/LMC/"
+		    data-code="https://github.com/boris-volkov/LMC">
+			<h3>LMC</h3>
+			<p>A working Little Man Computer. Write assembly, watch it assemble into numbered mailboxes, then step through one instruction at a time and see the accumulator and program counter move. The whole machine fits on one screen, so nothing about it is hidden.</p>
 		</li>
 
 		<li data-name="c_graphics"
@@ -238,45 +265,15 @@
 		    data-tech="c"
 		    data-code="https://github.com/boris-volkov/Cgraphics">
 			<h3>c_graphics</h3>
-			<p>A headless graphics library: rasterising and writing out images
-			   with no windowing system involved.</p>
+			<p>A headless graphics library: rasterising and writing out images with no windowing system involved.</p>
 		</li>
 
-	</ul>
-</section>
-
-<section data-dir="python" data-desc="source to read">
-	<h2>python</h2>
-	<ul>
-
-		<li data-name="chaos_graph.py"
-		    data-summary="the bifurcation diagram, plotted"
-		    data-tech="python &middot; matplotlib"
-		    data-code="https://github.com/boris-volkov/chaos_graph">
-			<h3>chaos_graph.py</h3>
-			<p>Plots the bifurcation diagram &mdash; orderly in places,
-			   indistinguishable from random in others, from one simple
-			   iterated rule.</p>
-		</li>
-
-		<li data-name="stock_trader.py"
-		    data-summary="a deliberately silly trading sim"
-		    data-tech="python &middot; terminal"
-		    data-code="https://github.com/boris-volkov/stock_trader">
-			<h3>stock_trader.py</h3>
-			<p>One company, ten thousand dollars, rent due monthly, coin-flip
-			   prices. At year's end it tells you what the perfect run would
-			   have earned.</p>
-		</li>
-
-		<li data-name="connect_four.py"
-		    data-summary="connect four in unicode blocks"
-		    data-tech="python &middot; terminal"
-		    data-code="https://github.com/boris-volkov/connect_four">
-			<h3>connect_four.py</h3>
-			<p>Connect four in the terminal, drawn with coloured unicode
-			   blocks. Full-screen the terminal and raise the font size and
-			   it starts to look like a real board.</p>
+		<li data-name="handheld"
+		    data-summary="a computer built for math practice"
+		    data-tech="c++ &middot; embedded"
+		    data-code="https://github.com/boris-volkov/handheld">
+			<h3>handheld</h3>
+			<p>A purpose-built handheld computer for math practice &mdash; the hardware and the software that runs on it.</p>
 		</li>
 
 	</ul>
@@ -287,14 +284,16 @@
 	<p>Programs for practicing things worth practicing &mdash; math, music,
 	   chess, and the game of go. Mostly C, C++ and JavaScript, and mostly
 	   written to be used rather than looked at.</p>
-	<p>Everything here has two doors. The files marked * you can start
-	   right now, in this browser: type ./name or just click one. The rest
-	   you download or build. Either way the source is one command away
-	   &mdash; code &lt;name&gt; opens it.</p>
+	<p>The directories here are the directories on my machine. This page is
+	   a window onto that folder, so what you see is what is actually there.</p>
+	<p>Everything has two doors. The files marked * you can start right now,
+	   in this browser: type ./name or just click one. The rest you download
+	   or build. Either way the source is one command away &mdash; code
+	   &lt;name&gt; opens it.</p>
 	<p>No frameworks, no build step, no analytics, no cookie banner. This
-	   page is one HTML file, one stylesheet and one script, and the list
-	   of programs is plain markup inside the HTML.</p>
-	<p>Type help for the commands, or ls -R to print the tree again.</p>
+	   page is one HTML file, one stylesheet and one script, and the list of
+	   programs is plain markup inside the HTML.</p>
+	<p>Type help for the commands, or ls -R to print the whole tree again.</p>
 </section>
 
 </main>
