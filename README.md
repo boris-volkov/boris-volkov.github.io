@@ -35,7 +35,7 @@ and add:
 | attribute | effect |
 |---|---|
 | `data-name` | the filename it appears as |
-| `data-summary` | the line beside it in `ls` — **keep under 35 characters** |
+| `data-summary` | the line beside it in `ls`. **Hidden for now** (`SHOW_DESCRIPTIONS = false` in `terminal.js`); keep under 35 characters for when it returns |
 | `data-tech` | shown under the title in the write-up |
 | `data-run` | where `[run]` goes. **Its presence is what makes the file an executable** — green, marked `*`, and `./name` works. Leave it out for source-only projects |
 | `data-run-label` | when "run" is the wrong verb. `go_station` uses `download` |

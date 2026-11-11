@@ -29,6 +29,11 @@ const hashPath = () => decodeURIComponent(location.hash.replace(/^#\/?/, ''));
    there when you come back. Flip this to leave in the same tab. */
 const NEW_TAB = true;
 
+/* The middle column of one-line descriptions in listings. Off for now:
+   just names and buttons. Flip to true to bring it back; the data-summary
+   and data-desc attributes in index.html are untouched. */
+const SHOW_DESCRIPTIONS = false;
+
 const COMMANDS = ['ls', 'tree', 'cd', 'cat', 'open', 'read', 'man', 'run',
                   'code', 'pwd', 'whoami', 'about', 'theme', 'clear',
                   'help', 'date'];
@@ -280,7 +285,7 @@ function entryItem(prefix, name, child, segs) {
 	const path = segs.concat(name).join('/');
 	if (child.type === 'dir') {
 		return {
-			prefix, label: name + '/', role: 'dir', desc: child.desc,
+			prefix, label: name + '/', role: 'dir', desc: SHOW_DESCRIPTIONS ? child.desc : '',
 			click: { kind: 'exec', cmd: 'cd ~/' + path }
 		};
 	}
@@ -288,7 +293,7 @@ function entryItem(prefix, name, child, segs) {
 		prefix,
 		label: name + (child.exec ? '*' : ''),
 		role: child.exec ? 'exec' : 'file',
-		desc: child.info.summary,
+		desc: SHOW_DESCRIPTIONS ? child.info.summary : '',
 		click: { kind: 'read', path: '~/' + path },
 		run: child.info.run,
 		runLabel: child.info.runLabel,
