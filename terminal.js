@@ -221,6 +221,10 @@ function push(rows) {
 
 const btn = t => '[' + t + ']';
 
+/* Spaces between the longest name in a listing and the [run] column.
+   (On phones the gap is hidden and the buttons follow the name.) */
+const NAME_GAP = 8;
+
 /* A listing is three columns of monospace text: the name (tree
    connectors included, so a tree and a flat `ls` line up the same), the
    description, and a rail of buttons on the right.
@@ -239,7 +243,7 @@ function alignRows(items) {
 		if (it.desc) actCol = Math.max(actCol, descCol + it.desc.length);
 		else if (it.run || it.code) actCol = Math.max(actCol, it.prefix.length + it.label.length);
 	}
-	actCol += 2;
+	actCol += NAME_GAP;
 
 	return items.map(it => {
 		const segs = [];
